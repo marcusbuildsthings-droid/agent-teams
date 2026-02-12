@@ -43,8 +43,18 @@ def create_team(team: str, members: Optional[list[str]] = None) -> dict:
     d.mkdir(parents=True, exist_ok=True)
     (d / "inboxes").mkdir(exist_ok=True)
     (d / "tasks").mkdir(exist_ok=True)
-    config = {"name": team, "members": members or [], "created": _now()}
-    _config_path(team).write_text(json.dumps(config, indent=2))
+    cp = _config_path(team)
+    if cp.exists():
+        # Don't overwrite existing team config
+        config = json.loads(cp.read_text())
+        # Merge in any new members
+        for m in (members or []):
+            if m not in config["members"]:
+                config["members"].append(m)
+        cp.write_text(json.dumps(config, indent=2))
+    else:
+        config = {"name": team, "members": members or [], "created": _now()}
+        cp.write_text(json.dumps(config, indent=2))
     # Create inboxes for initial members
     for m in (members or []):
         _inbox_path(team, m).write_text("[]")

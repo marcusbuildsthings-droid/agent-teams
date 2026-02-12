@@ -1,0 +1,41 @@
+# agent-teams
+
+File-based agent team coordination for [OpenClaw](https://github.com/nichochar/openclaw). Inspired by Claude Code's teams architecture.
+
+## Features
+
+- **Team management** — create/delete teams, add/remove members
+- **Mailbox IPC** — file-based inboxes with cursor-based polling
+- **Shared task list** — file-locked atomic task claims
+- **XML context injection** — poll output formatted for agent prompt injection
+- **Zero dependencies** — pure Python, no servers, no databases
+
+## Install
+
+```bash
+pip install -e .
+```
+
+## Quick Start
+
+```bash
+# Create a team
+agent-teams create my-team --members lead researcher builder
+
+# Send a message
+agent-teams send lead@my-team researcher@my-team --text "Find papers on X"
+
+# Poll inbox (XML for context injection)
+agent-teams poll researcher@my-team
+
+# Create and manage tasks
+agent-teams task-create my-team -s "Research task" --assign-to researcher --assign-by lead
+agent-teams task-claim my-team 1 researcher
+agent-teams task-complete my-team 1 researcher -r "Done!"
+```
+
+See [SKILL.md](../../skills/agent-teams/SKILL.md) for full documentation.
+
+## License
+
+MIT

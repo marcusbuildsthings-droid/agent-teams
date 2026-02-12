@@ -1,0 +1,10 @@
+pyproject.toml
+src/agent_teams/__init__.py
+src/agent_teams/cli.py
+src/agent_teams/core.py
+src/agent_teams.egg-info/PKG-INFO
+src/agent_teams.egg-info/SOURCES.txt
+src/agent_teams.egg-info/dependency_links.txt
+src/agent_teams.egg-info/entry_points.txt
+src/agent_teams.egg-info/top_level.txt
+tests/test_core.py
